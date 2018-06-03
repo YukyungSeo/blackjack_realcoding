@@ -525,6 +525,7 @@
                 'name':user.name
             },
         }).done(function(data) {
+	    user.account = data.playerList.test.balance;
             drawGameRoom(data);
         });
     })
