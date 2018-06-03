@@ -444,6 +444,7 @@
 <script>
     var user;
     var gameRoomId;
+    var test;
 
     $('#login_button').click(function() {
         var loginName = $('#input_login_name').val();
@@ -525,7 +526,10 @@
                 'name':user.name
             },
         }).done(function(data) {
-	    user.account = data.playerList.test.balance;
+            var str = "data.playerList.";
+            str += user.name;
+            str += ".balance";
+            user.account = eval(str);
             drawGameRoom(data);
         });
     })
