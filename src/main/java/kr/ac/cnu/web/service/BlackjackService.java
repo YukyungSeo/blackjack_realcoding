@@ -50,6 +50,7 @@ public class BlackjackService {
         return gameRoom;
     }
 
+
     public GameRoom hit(String roomId, User user) {
         GameRoom gameRoom = gameRoomMap.get(roomId);
 
@@ -57,7 +58,6 @@ public class BlackjackService {
 
         return gameRoom;
     }
-
     public GameRoom stand(String roomId, User user) {
         GameRoom gameRoom = gameRoomMap.get(roomId);
 
