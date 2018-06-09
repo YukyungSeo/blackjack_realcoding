@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:align="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -141,6 +141,9 @@
             -webkit-box-shadow: none;
         }
 
+        .register_img {
+            cursor: pointer;
+        }
         .card {
             background-image: url(./cards.png);
             float: left;
@@ -408,21 +411,25 @@
 <div class="page" id="login">
     <div>
         <input type="text" id="input_login_name" />
-        <div class="buttons"><div class="btn" id="login_button">Login</div></div>
-        <div class="buttons"><div class="btn" id="signup_button">Signup</div></div>
+        <div class="buttons"><div id="login_button"><img class="register_img" src="img/login.png" width="150px" height="90px"></div></div>
+        <div class="buttons"><div id="signup_button"><img class="register_img" src="img/signup.png" width="150px" height="90px"></div></div>
+        <img src="img/dobak.jpg" alt="dobak">
     </div>
 </div>
 <div class="page" id="lobby" style="display: none">
     <div>
-        <div class="buttons"><div class="btn" id="create_room_button">Create</div></div>
+        <div class="buttons"><div id="create_room_button"><img class="register_img" src="img/createRoom.png" width="150px" height="90px"></div></div>
+        <img src="img/panggalgi.jpg" atl="panggalgi">
     </div>
 </div>
 <div class="page" id="game" style="display: none">
     <div class="dealer-cards"></div>
     <div class="clear"></div>
     <div class="player-cards"></div>
-    <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div></div>
-    <div class="buttons"><div class="btn" id="deal">Deal</div></div>
+    <img src="img/sejong.png" align="left" width="200px" heigth="200px">
+    <img src="img/sinsa.png" align="right" width="200px" heigth="200px">
+    <div class="buttons"><div id="hit"><img class="register_img" src="img/hit.png" width="120px" height="60px"></div><div id="stand"><img class="register_img" src="img/stand.png" width="120px" height="60px"></div></div>
+    <div class="buttons"><div id="deal"><img class="register_img" src="img/enter.png" width="150px" height="90px"></div></div>
     <div class="betting-area">
         <b>Your Bet</b><br>
         <div id="bet" class="bet money">0</div>
@@ -536,14 +543,19 @@
 
     $('#more').click(function(){
         var bet = 1000;
+        var maximumBet = 10000; //[Add function]배팅 상한선 설정
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
         if (money < bet) {
             bet = money;
         }
-
-        $('#bet').html(currentBet + bet);
-        $('#money').html(money - bet);
+        if(currentBet >= maximumBet){
+            //betting 상한선을 10000원으로 설정해줘야 한다.
+        }
+        else {
+            $('#bet').html(currentBet + bet);
+            $('#money').html(money - bet);
+        }
     });
 
     $('#less').click(function(){
