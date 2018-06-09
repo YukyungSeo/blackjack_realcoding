@@ -543,14 +543,19 @@
 
     $('#more').click(function(){
         var bet = 1000;
+        var maximumBet = 10000; //[Add function]배팅 상한선 설정
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
         if (money < bet) {
             bet = money;
         }
-
-        $('#bet').html(currentBet + bet);
-        $('#money').html(money - bet);
+        if(currentBet >= maximumBet){
+            //betting 상한선을 10000원으로 설정해줘야 한다.
+        }
+        else {
+            $('#bet').html(currentBet + bet);
+            $('#money').html(money - bet);
+        }
     });
 
     $('#less').click(function(){
