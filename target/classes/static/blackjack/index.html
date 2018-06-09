@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-    <style>
+<style>
         /* Reset */
         html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 
@@ -452,6 +452,7 @@
     var user;
     var gameRoomId;
     var test;
+    var defaultBet = 0;
 
     $('#login_button').click(function() {
         var loginName = $('#input_login_name').val();
@@ -499,6 +500,7 @@
 
     $('#deal').click(function() {
         var bet = parseInt($('#bet').html());
+        defaultBet = 0;
 
         $.ajax({
             type: 'POST',
@@ -521,11 +523,16 @@
                 'name':user.name
             },
         }).done(function(data) {
+            if(data.playerList[user.name].hand.cardSum > 21){
+                defaultBet = parseInt($('#bet').html());
+            }
             drawGameRoom(data);
         });
     })
 
     $('#stand').click(function() {
+        defaultBet = parseInt($('#bet').html());
+
         $.ajax({
             type: 'POST',
             url: 'http://localhost:8080/api/black-jack/rooms/' + gameRoomId + '/stand',
@@ -541,7 +548,7 @@
         });
     })
 
-    $('#more').click(function(){
+     $('#more').click(function(){
         var bet = 1000;
         var maximumBet = 10000; //[Add function]배팅 상한선 설정
         var currentBet = parseInt($('#bet').html());
@@ -605,8 +612,8 @@
             $('.player-cards').append('<div id="playerTotal" class="player-total">' + gameRoom.playerList[user.name].hand.cardSum + '</div>')
         }
 
-        $('#bet').html(gameRoom.playerList[user.name].currentBet);
-        $('#money').html(gameRoom.playerList[user.name].balance);
+        $('#bet').html(gameRoom.playerList[user.name].currentBet+defaultBet);
+        $('#money').html(gameRoom.playerList[user.name].balance-defaultBet);
     }
 
     function generateCardDiv(rank, suit) {
