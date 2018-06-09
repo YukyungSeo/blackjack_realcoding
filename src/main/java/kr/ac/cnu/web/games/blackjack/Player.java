@@ -45,7 +45,16 @@ public class Player {
     }
 
     public void win() {
-        balance += currentBet * 2;
+        if(hand.getCardList().size() == 2 && hand.getCardSum() == 21) {
+            blackjack();
+        } else {
+            balance += currentBet * 2;
+            currentBet = 0;
+        }
+    }
+
+    private void blackjack(){
+        balance += currentBet * 2.5;
         currentBet = 0;
     }
 
