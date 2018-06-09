@@ -444,6 +444,7 @@
 <script>
     var user;
     var gameRoomId;
+    var test;
 
     $('#login_button').click(function() {
         var loginName = $('#input_login_name').val();
@@ -525,12 +526,16 @@
                 'name':user.name
             },
         }).done(function(data) {
+            var str = "data.playerList.";
+            str += user.name;
+            str += ".balance";
+            user.account = eval(str);
             drawGameRoom(data);
         });
     })
 
     $('#more').click(function(){
-        var bet = 100;
+        var bet = 1000;
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
         if (money < bet) {
@@ -542,7 +547,7 @@
     });
 
     $('#less').click(function(){
-        var bet = 100;
+        var bet = 1000;
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
         if(currentBet < bet) {

@@ -55,6 +55,11 @@ public class BlackjackService {
 
         gameRoom.hit(user.getName());
 
+        if(gameRoom.getPlayerList().get(user.getName()).getHand().getCardSum()>21){
+            gameRoom.stand(user.getName());
+            gameRoom.playDealer();
+        }
+
         return gameRoom;
     }
 

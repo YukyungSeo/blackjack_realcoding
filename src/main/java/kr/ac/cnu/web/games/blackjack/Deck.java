@@ -45,4 +45,12 @@ public class Deck {
         return cardList.remove(0);
     }
 
+    public void CardListSetting(){
+        if (cardList.size() <= 10){ // [Add function] Deck에 남은 카드가 10장 이하인경우 shuffle
+            // 게임이 끝나고 Deck에 남은 카드가 10장 이하인 경우 새롭게 shuffle 되도록 한다.
+            cardList.clear();
+            createCards(number);
+            Collections.shuffle(cardList);
+        }
+    }
 }

@@ -22,7 +22,15 @@ public class Evaluator {
         int dealerResult = dealer.getHand().getCardSum();
 
         if (dealerResult > 21) {
-            playerMap.forEach((s, player) -> player.win());
+            playerMap.forEach((s, player) -> {
+                int playerResult = player.getHand().getCardSum();
+                if(playerResult >= dealerResult) { //dealerResult와 playerResult가 둘 다 21이 넘으면
+                    player.lost(); //player가 무조건 진다.
+                }
+                else{ //만약 playerResult가 21이하이고 dealerResult는 21이 넘으면
+                    player.win(); //player가 승리한다.
+                }
+            });
 
             return true;
         }
