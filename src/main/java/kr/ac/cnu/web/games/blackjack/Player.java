@@ -72,6 +72,7 @@ public class Player {
     }
 
     public void stand() {
+        hand.getDeck().CardListSetting();
         this.isPlaying = false;
     }
 

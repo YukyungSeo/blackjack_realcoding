@@ -10,6 +10,7 @@ import java.util.List;
  * Created by rokim on 2018. 5. 26..
  */
 public class Hand {
+    @Getter
     private Deck deck;
     @Getter
     private List<Card> cardList = new ArrayList<>();
