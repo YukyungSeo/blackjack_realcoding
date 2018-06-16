@@ -20,6 +20,8 @@ public class GameRoom {
     private final Deck deck;
     @Getter
     private boolean isFinished;
+    @Getter
+    private boolean isDoubleDown;
     private final Evaluator evaluator;
 
     public GameRoom(Deck deck) {
@@ -68,6 +70,16 @@ public class GameRoom {
         Player player = playerList.get(name);
 
         player.stand();
+    }
+
+    public void doubleDown(String name){ //double down 기능 추가 구현
+        this.isDoubleDown = true;
+        Player player = playerList.get(name);
+        long plusBetting = player.getCurrentBet();
+
+        player.placeBet(plusBetting); //배팅을 2배로한다(그래서 한번 더 배팅한다.)
+        player.hitCard(); //카드를 한장 받고
+        player.stand(); //게임을 종료한다.
     }
 
     public void playDealer() {
