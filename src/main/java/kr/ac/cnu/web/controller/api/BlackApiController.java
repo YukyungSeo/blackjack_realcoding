@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.awt.*;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,9 +53,10 @@ public class BlackApiController {
         return userRepository.save(user);
     }
 
-
-
-
+    @PostMapping("/user_repos")
+    public List<User> userRepos() {
+        return userRepository.findAll();
+    }
 
     @PostMapping("/rooms")
     public GameRoom createRoom(@RequestHeader("name") String name) {
