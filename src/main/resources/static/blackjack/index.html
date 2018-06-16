@@ -613,7 +613,11 @@
         if (gameRoom.playerList[user.name].hand.cardList.length > 0) {
             $('.player-cards').append('<div id="playerTotal" class="player-total">' + gameRoom.playerList[user.name].hand.cardSum + '</div>')
         }
-
+        var bal = gameRoom.playerList[user.name].balance;
+        if(defaultBet > bal){
+            //all-in
+            defaultBet = bal;
+        }
         $('#bet').html(gameRoom.playerList[user.name].currentBet+defaultBet);
         $('#money').html(gameRoom.playerList[user.name].balance-defaultBet); 
     }
