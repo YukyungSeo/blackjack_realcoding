@@ -34,7 +34,7 @@ public class Player {
             throw new NotEnoughBalanceException();
         }
         balance -= bet;
-        currentBet = bet;
+        currentBet += bet;
 
         isPlaying = true;
     }

@@ -569,6 +569,23 @@
         });
     })
 
+    $('#doubledown').click(function() {
+        defaultBet = parseInt($('#bet').html());
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/api/black-jack/rooms/' + gameRoomId + '/doubledown',
+            headers: {
+                'name':user.name
+            },
+        }).done(function(data) {
+            var str = "data.playerList.";
+            str += user.name;
+            str += ".balance";
+            user.account = eval(str);
+            drawGameRoom(data);
+        });
+    })
+
      $('#more').click(function(){
         var bet = 1000;
         var maximumBet = 10000; //[Add function]배팅 상한선 설정
