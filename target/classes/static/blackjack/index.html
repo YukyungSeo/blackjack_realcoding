@@ -405,9 +405,21 @@
             color: green;
             font-size: 21px;
         }
+    #user_info{
+        display: table;
+
+    }
     </style>
 </head>
 <body>
+<div id="user_info" style="display: none">
+    <div id="info_name">
+        사용자 이름 :
+    </div>
+    <div id="info_money">
+        현재 잔액 :
+    </div>
+</div>
 <div class="page" id="login">
     <div>
         <input type="text" id="input_login_name" />
@@ -462,11 +474,15 @@
             data: loginName,
             contentType:'application/json;'
         }).done(function(data) {
+            $('#user_info').show();
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + data.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " + data.account;
         });
     });
+
 
     $('#signup_button').click(function() {
         var loginName = $('#input_login_name').val();
@@ -495,6 +511,7 @@
             $('#game').show();
             gameRoomId = data.roomId;
             drawGameRoom(data);
+
         });
     })
 
@@ -512,6 +529,8 @@
             contentType:'application/json;',
         }).done(function(data) {
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
@@ -545,6 +564,8 @@
             str += ".balance";
             user.account = eval(str);
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
