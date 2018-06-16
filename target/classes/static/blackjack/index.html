@@ -428,7 +428,7 @@
     <div class="player-cards"></div>
     <img src="img/sejong.png" align="left" width="200px" heigth="200px">
     <img src="img/sinsa.png" align="right" width="200px" heigth="200px">
-    <div class="buttons"><div id="hit"><img class="register_img" src="img/hit.png" width="120px" height="60px"></div><div id="stand"><img class="register_img" src="img/stand.png" width="120px" height="60px"></div></div>
+    <div class="buttons"><div id="hit"><img class="register_img" src="img/hit.png" width="120px" height="60px"></div><div id="stand"><img class="register_img" src="img/stand.png" width="120px" height="60px"></div><div id="doubledown"><img class="register_img" src="img/doubledown.png" width="120px" height="60px"></div></div>
     <div class="buttons"><div id="deal"><img class="register_img" src="img/enter.png" width="150px" height="90px"></div></div>
     <div class="betting-area">
         <b>Your Bet</b><br>
@@ -585,12 +585,14 @@
             $('#less').show();
             $('#hit').hide();
             $('#stand').hide();
+            $('#doubledown').hide();
         } else {
             $('#deal').hide();
             $('#more').hide();
             $('#less').hide();
             $('#hit').show();
             $('#stand').show();
+            $('#doubledown').show();
         }
 
         $('.dealer-cards').html("");
