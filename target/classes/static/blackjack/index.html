@@ -492,9 +492,12 @@
             data: loginName,
             contentType:'application/json;'
         }).done(function(data) {
+            $('#user_info').show();
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + data.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " + data.account;
         });
     });
 
