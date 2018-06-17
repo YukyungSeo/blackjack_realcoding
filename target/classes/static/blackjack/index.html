@@ -405,11 +405,13 @@
             color: green;
             font-size: 21px;
         }
+    #user_info{
+        display: table;
+
+    }
     </style>
 </head>
 <body>
-<<<<<<< Updated upstream
-=======
 <div id="rank">부자</div>
 <div id="user_info" style="display: none">
     <div id="info_name">
@@ -419,7 +421,6 @@
         현재 잔액 :
     </div>
 </div>
->>>>>>> Stashed changes
 <div class="page" id="login">
     <div>
         <input type="text" id="input_login_name" />
@@ -500,16 +501,16 @@
             data: loginName,
             contentType:'application/json;'
         }).done(function(data) {
-<<<<<<< Updated upstream
-=======
-            $('#rank').hide();
+         $('#rank').hide();
             $('#user_info').show();
->>>>>>> Stashed changes
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + data.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " + data.account;
         });
     });
+
 
     $('#signup_button').click(function() {
         var loginName = $('#input_login_name').val();
@@ -519,14 +520,13 @@
             data: loginName,
             contentType:'application/json;'
         }).done(function(data) {
-<<<<<<< Updated upstream
-=======
             $('#rank').hide();
             $('#user_info').show();
->>>>>>> Stashed changes
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + data.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " + data.account;
         });
     });
 
@@ -544,6 +544,7 @@
             $('#game').show();
             gameRoomId = data.roomId;
             drawGameRoom(data);
+
         });
     })
 
@@ -561,6 +562,8 @@
             contentType:'application/json;',
         }).done(function(data) {
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
@@ -594,6 +597,8 @@
             str += ".balance";
             user.account = eval(str);
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
@@ -681,9 +686,13 @@
         if (gameRoom.playerList[user.name].hand.cardList.length > 0) {
             $('.player-cards').append('<div id="playerTotal" class="player-total">' + gameRoom.playerList[user.name].hand.cardSum + '</div>')
         }
-
+        var bal = gameRoom.playerList[user.name].balance;
+        if(defaultBet > bal){
+            //all-in
+            defaultBet = bal;
+        }
         $('#bet').html(gameRoom.playerList[user.name].currentBet+defaultBet);
-        $('#money').html(gameRoom.playerList[user.name].balance-defaultBet);
+        $('#money').html(gameRoom.playerList[user.name].balance-defaultBet); 
     }
 
     function generateCardDiv(rank, suit) {

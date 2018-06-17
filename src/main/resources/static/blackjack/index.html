@@ -405,9 +405,22 @@
             color: green;
             font-size: 21px;
         }
+    #user_info{
+        display: table;
+
+    }
     </style>
 </head>
 <body>
+<div id="rank">부자</div>
+<div id="user_info" style="display: none">
+    <div id="info_name">
+        사용자 이름 :
+    </div>
+    <div id="info_money">
+        현재 잔액 :
+    </div>
+</div>
 <div class="page" id="login">
     <div>
         <input type="text" id="input_login_name" />
@@ -454,6 +467,32 @@
     var test;
     var defaultBet = 0;
 
+    $(document).ready(function() {
+         $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/api/black-jack/user_repos',
+            }).done(function(data) {
+                var len = data.length;
+                var arr = new Array();
+                for (var i=0 ; i<len ; i++) {
+                    arr.push(data[i]);
+                }
+
+                var sorting = "account";
+
+                arr.sort(function(a, b) {
+                    return b[sorting] - a[sorting];
+                });
+
+                var rank = document.getElementById('rank');
+                var rank_inner = "<p>부자</p>";
+                for (var i=0 ; i<len ; i++) {
+                    rank_inner += "<p>"+(i+1)+". "+arr[i].name+"-"+arr[i].account+"</p>";
+                }
+                rank.innerHTML = rank_inner;
+            });
+    });
+
     $('#login_button').click(function() {
         var loginName = $('#input_login_name').val();
         $.ajax({
@@ -462,11 +501,16 @@
             data: loginName,
             contentType:'application/json;'
         }).done(function(data) {
+            $('#rank').hide();
+            $('#user_info').show();
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + data.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " + data.account;
         });
     });
+
 
     $('#signup_button').click(function() {
         var loginName = $('#input_login_name').val();
@@ -476,9 +520,13 @@
             data: loginName,
             contentType:'application/json;'
         }).done(function(data) {
+            $('#rank').hide();
+            $('#user_info').show();
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + data.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " + data.account;
         });
     });
 
@@ -490,11 +538,13 @@
                 'name':user.name
             }
         }).done(function(data) {
+            $('#rank').hide();
             $('#login').hide();
             $('#lobby').hide();
             $('#game').show();
             gameRoomId = data.roomId;
             drawGameRoom(data);
+
         });
     })
 
@@ -512,6 +562,8 @@
             contentType:'application/json;',
         }).done(function(data) {
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
@@ -545,6 +597,8 @@
             str += ".balance";
             user.account = eval(str);
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
@@ -562,6 +616,8 @@
             str += ".balance";
             user.account = eval(str);
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
@@ -630,9 +686,13 @@
         if (gameRoom.playerList[user.name].hand.cardList.length > 0) {
             $('.player-cards').append('<div id="playerTotal" class="player-total">' + gameRoom.playerList[user.name].hand.cardSum + '</div>')
         }
-
+        var bal = gameRoom.playerList[user.name].balance;
+        if(defaultBet > bal){
+            //all-in
+            defaultBet = bal;
+        }
         $('#bet').html(gameRoom.playerList[user.name].currentBet+defaultBet);
-        $('#money').html(gameRoom.playerList[user.name].balance-defaultBet);
+        $('#money').html(gameRoom.playerList[user.name].balance-defaultBet); 
     }
 
     function generateCardDiv(rank, suit) {
