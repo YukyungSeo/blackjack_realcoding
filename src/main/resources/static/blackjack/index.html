@@ -616,6 +616,8 @@
             str += ".balance";
             user.account = eval(str);
             drawGameRoom(data);
+            document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
+            document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
         });
     })
 
