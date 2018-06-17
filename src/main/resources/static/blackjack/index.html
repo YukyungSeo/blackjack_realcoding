@@ -549,7 +549,6 @@
     })
 
     $('#doubledown').click(function() {
-        defaultBet = parseInt($('#bet').html());
         $.ajax({
             type: 'POST',
             url: 'http://localhost:8080/api/black-jack/rooms/' + gameRoomId + '/doubledown',
@@ -557,6 +556,7 @@
                 'name':user.name
             },
         }).done(function(data) {
+            defaultBet = parseInt($('#bet').html());
             var str = "data.playerList.";
             str += user.name;
             str += ".balance";
