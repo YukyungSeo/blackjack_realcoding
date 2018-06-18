@@ -20,7 +20,7 @@ public class GameRoom {
     private final Deck deck;
     @Getter
     private boolean isFinished;
-    @Getter
+
     private boolean isDoubleDown;
     private final Evaluator evaluator;
 

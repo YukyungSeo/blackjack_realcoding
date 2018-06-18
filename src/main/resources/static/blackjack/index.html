@@ -466,6 +466,7 @@
     var gameRoomId;
     var test;
     var defaultBet = 0;
+    var available_DoubleDown = true;
 
     $(document).ready(function() {
          $.ajax({
@@ -561,6 +562,7 @@
             data: JSON.stringify(bet),
             contentType:'application/json;',
         }).done(function(data) {
+            available_DoubleDown = true;
             drawGameRoom(data);
             document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
             document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
@@ -578,6 +580,8 @@
             if(data.playerList[user.name].hand.cardSum > 21){
                 defaultBet = parseInt($('#bet').html());
             }
+
+            available_DoubleDown = false;
             drawGameRoom(data);
         });
     })
@@ -596,6 +600,7 @@
             str += user.name;
             str += ".balance";
             user.account = eval(str);
+            available_DoubleDown = false;
             drawGameRoom(data);
             document.getElementById('info_name').innerHTML = "사용자 이름 : " + user.name;
             document.getElementById('info_money').innerHTML = "현재 잔액 : " +  (data.playerList[user.name].balance);
@@ -665,7 +670,11 @@
             $('#less').hide();
             $('#hit').show();
             $('#stand').show();
-            $('#doubledown').show();
+            if(available_DoubleDown == true) {
+                $('#doubledown').show();
+            }else{
+                $('#doubledown').hide();
+            }
         }
 
         $('.dealer-cards').html("");
