@@ -3,6 +3,7 @@ package kr.ac.cnu.web.controller.api;
 import kr.ac.cnu.web.exceptions.NoLoginException;
 import kr.ac.cnu.web.exceptions.NoUserException;
 import kr.ac.cnu.web.games.blackjack.GameRoom;
+import kr.ac.cnu.web.games.blackjack.Player;
 import kr.ac.cnu.web.model.User;
 import kr.ac.cnu.web.repository.UserRepository;
 import kr.ac.cnu.web.service.BlackjackService;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,22 +75,31 @@ public class BlackApiController {
     @PostMapping("/rooms/{roomId}/hit")
     public GameRoom hit(@RequestHeader("name") String name, @PathVariable String roomId) {
         User user = this.getUserFromSession(name);
+        GameRoom gameRoom = blackjackService.hit(roomId, user);
 
-        return blackjackService.hit(roomId, user);
+        user.setAccount(gameRoom.getPlayerList().get(name).getBalance());
+        userRepository.save(user);
+        return gameRoom;
     }
 
     @PostMapping("/rooms/{roomId}/stand")
     public GameRoom stand(@RequestHeader("name") String name, @PathVariable String roomId) {
         User user = this.getUserFromSession(name);
+        GameRoom gameRoom = blackjackService.stand(roomId, user);
 
-        return blackjackService.stand(roomId, user);
+        user.setAccount(gameRoom.getPlayerList().get(name).getBalance());
+        userRepository.save(user);
+        return gameRoom;
     }
 
     @PostMapping("/rooms/{roomId}/doubledown")
     public GameRoom doubleDown(@RequestHeader("name") String name, @PathVariable String roomId) {
         User user = this.getUserFromSession(name);
+        GameRoom gameRoom = blackjackService.doubleDown(roomId,user);
 
-        return blackjackService.doubleDown(roomId, user);
+        user.setAccount(gameRoom.getPlayerList().get(name).getBalance());
+        userRepository.save(user);
+        return gameRoom;
     }
 
     @GetMapping("/rooms/{roomId}")
