@@ -42,6 +42,9 @@ public class BlackjackService {
 
     public GameRoom bet(String roomId, User user, long bet) {
         GameRoom gameRoom = gameRoomMap.get(roomId);
+        if(bet == 0){ //betting 금액이 0원이면 게임을 실행하지 않는다.
+            return gameRoom;
+        }
 
         gameRoom.reset();
         gameRoom.bet(user.getName(), bet);

@@ -437,12 +437,17 @@
                 'name':user.name
             }
         }).done(function(data) {
-            $('#rank').hide();
-            $('#login').hide();
-            $('#lobby').hide();
-            $('#game').show();
-            gameRoomId = data.roomId;
-            drawGameRoom(data);
+            if(data.playerList[user.name].balance == 0){
+                alert("금액 충전이 필요합니다. (게임불가)")
+            }
+            else {
+                $('#rank').hide();
+                $('#login').hide();
+                $('#lobby').hide();
+                $('#game').show();
+                gameRoomId = data.roomId;
+                drawGameRoom(data);
+            }
         });
     })
     $('#deal').click(function() {
@@ -518,8 +523,11 @@
         if (money < bet) {
             bet = money;
         }
-        if(currentBet >= maximumBet){
+
+        if(currentBet >= maximumBet || money == 0){
             //betting 상한선을 10000원으로 설정해줘야 한다.
+            //betting 금액이 0원이면 게임을 실행하지 않는다.
+            alert("1원 ~ 10000원 범위로 배팅해주세요.")
         }
         else {
             $('#bet').html(currentBet + bet);

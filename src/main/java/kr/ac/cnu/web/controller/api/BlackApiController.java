@@ -3,7 +3,6 @@ package kr.ac.cnu.web.controller.api;
 import kr.ac.cnu.web.exceptions.NoLoginException;
 import kr.ac.cnu.web.exceptions.NoUserException;
 import kr.ac.cnu.web.games.blackjack.GameRoom;
-import kr.ac.cnu.web.games.blackjack.Player;
 import kr.ac.cnu.web.model.User;
 import kr.ac.cnu.web.repository.UserRepository;
 import kr.ac.cnu.web.service.BlackjackService;
